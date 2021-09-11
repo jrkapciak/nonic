@@ -44,4 +44,3 @@ class BeerViewSetTestCase(APITestCase):
     def test_list_all_element_count(self):
         response = self.client.get(reverse('api-mobile:beers-list'))
         self.assertEqual(response.data.get('count'), len(self.beer_list))
-

@@ -28,5 +28,3 @@ class TimedTextTestRunner(TextTestRunner):
 
 class TimedRunner(DiscoverRunner):
     test_runner = TimedTextTestRunner
-
-
