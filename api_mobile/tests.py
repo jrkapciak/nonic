@@ -9,7 +9,6 @@ faker = Faker()
 
 
 class BeerViewSetTestCase(APITestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -32,15 +31,17 @@ class BeerViewSetTestCase(APITestCase):
         number_of_beers = faker.pyint(min_value=1, max_value=999)
         beer_style_list = cls.create_list_of_beer_styles()
         for beer in range(number_of_beers):
-            beer_list.append(BeerFactory.create(
-                style=faker.random_choices(elements=beer_style_list, length=faker.pyint(max_value=10))
-            ))
+            beer_list.append(
+                BeerFactory.create(
+                    style=faker.random_choices(elements=beer_style_list, length=faker.pyint(max_value=10))
+                )
+            )
         return beer_list
 
     def test_list_status_code(self):
-        response = self.client.get(reverse('api-mobile:beers-list'))
+        response = self.client.get(reverse("api-mobile:beers-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_list_all_element_count(self):
-        response = self.client.get(reverse('api-mobile:beers-list'))
-        self.assertEqual(response.data.get('count'), len(self.beer_list))
+        response = self.client.get(reverse("api-mobile:beers-list"))
+        self.assertEqual(response.data.get("count"), len(self.beer_list))

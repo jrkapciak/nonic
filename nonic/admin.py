@@ -4,7 +4,7 @@ from . import models
 
 
 class BeerAdmin(admin.ModelAdmin):
-    search_fields = ['name']
+    search_fields = ["name"]
     list_display = ["name", "manufactured_by", "get_styles"]
 
     def get_styles(self, obj):

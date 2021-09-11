@@ -5,7 +5,6 @@ from django.test.runner import DiscoverRunner
 
 
 class TimedTextTestResult(TextTestResult):
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.clocks = dict()
