@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "123321a")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", False)
@@ -80,7 +80,6 @@ WSGI_APPLICATION = "nonic.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-print(os.getenv("POSTGRES_PASSWORD"))
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.{}".format(os.getenv("DATABASE_ENGINE", "postgresql_psycopg2")),
@@ -92,7 +91,6 @@ DATABASES = {
     }
 }
 
-print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
