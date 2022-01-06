@@ -26,7 +26,6 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "123321a")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", False)
-
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
 
 # Application definition
@@ -156,7 +155,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 if os.environ.get("S3"):
     AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")

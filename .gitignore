@@ -104,6 +104,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json
 .history
 
-/tutorial
-tutorial
 secret.py
+/staticfiles
