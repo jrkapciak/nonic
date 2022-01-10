@@ -57,6 +57,7 @@ RUN pip install --no-cache /wheels/*
 
 # copy entrypoint.sh
 COPY ./entrypoint.sh .
+COPY ./initial_data.json .
 RUN sed -i 's/\r$//g'  $APP_HOME/entrypoint.sh
 RUN chmod +x  $APP_HOME/entrypoint.sh
 
