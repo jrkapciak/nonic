@@ -3,27 +3,16 @@ repos:
       rev: v4.0.1
       hooks:
         -   id: check-yaml
-            exclude: |
-              (?x)(
-                  /migrations/|
-                  /test_messages/
-              )
+            exclude: ^migrations/
         -   id: end-of-file-fixer
-            exclude: |
-              (?x)(
-                  /migrations/|
-                  /test_messages/
-              )
+            exclude: ^migrations/
         -   id: trailing-whitespace
-            exclude: |
-              (?x)(
-                  /migrations/|
-                  /test_messages/
-              )
+            exclude: ^migrations/
   -   repo: https://github.com/psf/black
       rev: 21.11b1
       hooks:
         -   id: black
+            exclude: ^/migrations/
   - repo: https://github.com/timothycrosley/isort
     rev: 5.10.1
     hooks:
