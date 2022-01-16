@@ -13,20 +13,25 @@ faker.add_provider(company)
 class BeerStyleFactory(DjangoModelFactory):
     class Meta:
         model = models.Style
+        get_or_crate = "name"
 
-    name = factory.LazyAttribute(lambda obj: faker.lexify())
+
+name = factory.LazyAttribute(lambda obj: faker.lexify())
 
 
 class ManufacturerFactory(DjangoModelFactory):
     class Meta:
         model = models.Manufacturer
+        get_or_crate = "name"
 
-    name = factory.LazyAttribute(lambda obj: faker.company())
+
+name = factory.LazyAttribute(lambda obj: faker.company())
 
 
 class BeerFactory(DjangoModelFactory):
     class Meta:
         model = models.Beer
+        get_or_crate = "code"
 
     name = factory.LazyAttribute(lambda obj: faker.company())
     code = faker.ean()
