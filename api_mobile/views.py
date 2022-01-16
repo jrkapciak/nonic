@@ -11,4 +11,3 @@ class BeerViewSet(viewsets.ModelViewSet):
     queryset = nonic_models.Beer.objects.all()
     serializer_class = serializers.BeerSerializer
     filter_class = BeerFilter
-    filterset_fields = ("category", "in_stock")
