@@ -37,6 +37,7 @@ class BeerFactory(DjangoModelFactory):
     manufactured_by = SubFactory(ManufacturerFactory)
     volume = faker.random_int
     tags = faker.json
+    country = faker.country
 
     @factory.post_generation
     def style(self, create, styles, **kwargs):
