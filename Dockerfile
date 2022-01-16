@@ -16,11 +16,8 @@ ENV PYTHONUNBUFFERED 1
 RUN apk update \
     && apk add --virtual build-deps postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev
 
-# lint
 RUN pip install --upgrade pip
-RUN pip install flake8==3.9.2
 COPY . .
-RUN flake8 --ignore=E501,F401 .
 
 # install dependencies
 COPY ./requirements.txt .
