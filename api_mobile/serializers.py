@@ -35,4 +35,5 @@ class BeerSerializer(serializers.ModelSerializer):
             "alcohol",
             "style",
             "thumbnail",
+            "country",
         )

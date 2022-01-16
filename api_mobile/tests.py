@@ -45,3 +45,10 @@ class BeerViewSetTestCase(APITestCase):
     def test_list_all_element_count(self):
         response = self.client.get(reverse("api-mobile:beers-list"))
         self.assertEqual(response.data.get("count"), len(self.beer_list))
+
+    def test_list_filter(self):
+        beer_list_countries = [beer.country for beer in self.beer_list]
+        most_popular_country = max(set(beer_list_countries), key=beer_list_countries.count)
+        url = f'{reverse("api-mobile:beers-list")}?country={most_popular_country}'
+        response = self.client.get(url)
+        self.assertEqual(response.data.get("count"), beer_list_countries.count(most_popular_country))
