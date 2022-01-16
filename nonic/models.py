@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from nonic.storages import PublicMediaStorage
 
@@ -26,9 +26,14 @@ class Style(TimestampedModel):
         return self.name
 
 
+class BeerSource(TimestampedModel):
+    url = models.URLField(_("URL"), unique=True)
+    beer = models.ForeignKey("nonic.Beer", verbose_name=_("Beer"), related_name="sources", on_delete=models.CASCADE)
+
+
 class Beer(TimestampedModel):
     name = models.CharField(_("Name"), max_length=255, blank=False)
-    code = models.CharField(_("Code"), max_length=255, blank=False)
+    code = models.CharField(_("Code"), max_length=255, blank=False, unique=True)
     description = models.TextField(_("Description"), blank=False)
     manufactured_by = models.ForeignKey(
         "nonic.Manufacturer", verbose_name=_("Manufacturer"), related_name="beers", on_delete=models.CASCADE
@@ -39,6 +44,7 @@ class Beer(TimestampedModel):
     extract = models.FloatField(_("Extract"), blank=True, null=True)
     tags = models.JSONField(_("Tags"), blank=True, default=dict)
     thumbnail = models.ImageField(_("thumbnail"), storage=PublicMediaStorage(), blank=True, null=True)
+    country = models.CharField(_("Country"), max_length=255, blank=False)
 
     class Meta:
         ordering = ["-name"]

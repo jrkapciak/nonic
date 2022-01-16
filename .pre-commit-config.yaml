@@ -1,0 +1,30 @@
+repos:
+  -   repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+        -   id: check-yaml
+            exclude: |
+              (?x)(
+                  /migrations/|
+                  /test_messages/
+              )
+        -   id: end-of-file-fixer
+            exclude: |
+              (?x)(
+                  /migrations/|
+                  /test_messages/
+              )
+        -   id: trailing-whitespace
+            exclude: |
+              (?x)(
+                  /migrations/|
+                  /test_messages/
+              )
+  -   repo: https://github.com/psf/black
+      rev: 21.11b1
+      hooks:
+        -   id: black
+  - repo: https://github.com/timothycrosley/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort

@@ -2,3 +2,5 @@
 
 black==21.8b0
 flake8==3.9.2
+pre-commit==2.16.0
+isort==5.10.1

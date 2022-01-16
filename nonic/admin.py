@@ -11,6 +11,10 @@ class BeerAdmin(admin.ModelAdmin):
         return ", ".join([s.name for s in obj.style.all()])
 
 
+class ManufacturerAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
+
+
 admin.site.register(models.Beer, BeerAdmin)
-admin.site.register(models.Manufacturer)
+admin.site.register(models.Manufacturer, ManufacturerAdmin)
 admin.site.register(models.Style)

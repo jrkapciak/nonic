@@ -107,3 +107,4 @@ GitHub.sublime-settings
 secret.py
 /staticfiles
 /scraps/settings.py
+/scraps/dnote.text

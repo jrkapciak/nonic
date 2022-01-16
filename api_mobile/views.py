@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+
 from nonic import filters as nonic_filters
 from nonic import models as nonic_models
 
