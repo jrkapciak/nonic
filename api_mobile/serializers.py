@@ -6,10 +6,7 @@ from nonic import models
 class ManufactureSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Manufacturer
-        fields = (
-            'id',
-            'name'
-        )
+        fields = ("id", "name")
 
 
 class BeerSerializer(serializers.ModelSerializer):
@@ -18,7 +15,7 @@ class BeerSerializer(serializers.ModelSerializer):
     manufactured_id = serializers.PrimaryKeyRelatedField(
         queryset=models.Manufacturer.objects.all(),
         required=False,
-        source='manufactured_by',
+        source="manufactured_by",
     )
     manufactured_by = ManufactureSerializer(
         required=False,
