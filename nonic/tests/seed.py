@@ -13,32 +13,30 @@ faker.add_provider(company)
 class BeerStyleFactory(DjangoModelFactory):
     class Meta:
         model = models.Style
-        get_or_crate = "name"
+        django_get_or_create = ("name",)
 
-
-name = factory.LazyAttribute(lambda obj: faker.lexify())
+    name = faker.lexify
 
 
 class ManufacturerFactory(DjangoModelFactory):
     class Meta:
         model = models.Manufacturer
-        get_or_crate = "name"
+        django_get_or_create = ("name",)
 
-
-name = factory.LazyAttribute(lambda obj: faker.company())
+    name = faker.company
 
 
 class BeerFactory(DjangoModelFactory):
     class Meta:
         model = models.Beer
-        get_or_crate = "code"
+        django_get_or_create = ("code",)
 
-    name = factory.LazyAttribute(lambda obj: faker.company())
-    code = faker.ean()
+    name = faker.company
+    code = faker.ean
     description = faker.paragraph(variable_nb_sentences=False)
     manufactured_by = SubFactory(ManufacturerFactory)
-    volume = faker.random_int()
-    tags = faker.json()
+    volume = faker.random_int
+    tags = faker.json
 
     @factory.post_generation
     def style(self, create, styles, **kwargs):
