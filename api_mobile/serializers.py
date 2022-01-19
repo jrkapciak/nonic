@@ -33,3 +33,12 @@ class BeerSerializer(serializers.ModelSerializer):
             "rating",
             "rating_count",
         )
+
+
+class StylesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Style
+        fields = (
+            "name",
+        )

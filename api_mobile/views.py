@@ -11,3 +11,9 @@ class BeerViewSet(viewsets.ModelViewSet):
     queryset = nonic_models.Beer.objects.all()
     serializer_class = serializers.BeerSerializer
     filter_class = BeerFilter
+
+
+class StyleViewSet(viewsets.ModelViewSet):
+    paginate_by = 10
+    queryset = nonic_models.Style.objects.all()
+    serializer_class = serializers.StylesSerializer
