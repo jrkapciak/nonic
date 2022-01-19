@@ -19,6 +19,7 @@ class BeerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Beer
         fields = (
+            "id",
             "name",
             "code",
             "description",
@@ -29,4 +30,6 @@ class BeerSerializer(serializers.ModelSerializer):
             "style",
             "thumbnail",
             "country",
+            "rating",
+            "rating_count",
         )

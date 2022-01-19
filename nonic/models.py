@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -45,6 +46,10 @@ class Beer(TimestampedModel):
     tags = models.JSONField(_("Tags"), blank=True, default=dict)
     thumbnail = models.ImageField(_("thumbnail"), storage=PublicMediaStorage(), blank=True, null=True)
     country = models.CharField(_("Country"), max_length=255, blank=False)
+    rating = models.PositiveSmallIntegerField(
+        _("Rating"), blank=True, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)]
+    )
+    rating_count = models.IntegerField(_("Rating count"), blank=True, default=0)
 
     class Meta:
         ordering = ["-name"]
