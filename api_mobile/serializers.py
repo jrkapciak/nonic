@@ -15,6 +15,7 @@ class BeerSerializer(serializers.ModelSerializer):
         required=False,
         read_only=True,
     )
+
     class Meta:
         model = models.Beer
         fields = (
