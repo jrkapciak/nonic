@@ -36,9 +36,6 @@ class BeerSerializer(serializers.ModelSerializer):
 
 
 class StylesSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Style
-        fields = (
-            "name",
-        )
+        fields = ("name",)

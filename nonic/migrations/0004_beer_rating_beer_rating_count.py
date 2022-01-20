@@ -7,18 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('nonic', '0003_auto_20220114_2049'),
+        ("nonic", "0003_auto_20220114_2049"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='beer',
-            name='rating',
-            field=models.PositiveSmallIntegerField(blank=True, default=1, validators=[django.core.validators.MaxValueValidator(10), django.core.validators.MinValueValidator(1)], verbose_name='Rating'),
+            model_name="beer",
+            name="rating",
+            field=models.PositiveSmallIntegerField(
+                blank=True,
+                default=1,
+                validators=[django.core.validators.MaxValueValidator(10), django.core.validators.MinValueValidator(1)],
+                verbose_name="Rating",
+            ),
         ),
         migrations.AddField(
-            model_name='beer',
-            name='rating_count',
-            field=models.IntegerField(blank=True, default=0, verbose_name='Rating count'),
+            model_name="beer",
+            name="rating_count",
+            field=models.IntegerField(blank=True, default=0, verbose_name="Rating count"),
         ),
     ]
