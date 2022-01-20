@@ -1,8 +1,3 @@
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 BOT_NAME = "second"
 SPIDER_MODULES = ["second.spiders"]
 NEWSPIDER_MODULE = "second.spiders"
