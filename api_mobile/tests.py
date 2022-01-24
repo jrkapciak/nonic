@@ -3,7 +3,7 @@ from faker import Faker
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
-from nonic.tests.seed import BeerFactory, BeerStyleFactory
+from nonic.tests.factories import BeerFactory, BeerStyleFactory
 
 faker = Faker()
 
