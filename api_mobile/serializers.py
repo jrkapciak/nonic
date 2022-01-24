@@ -15,10 +15,8 @@ class BeerSerializer(serializers.ModelSerializer):
         required=False,
         read_only=True,
     )
-    lookup_field = 'code'
-    extra_kwargs = {
-        'url': {'lookup_field': 'code'}
-    }
+    lookup_field = "code"
+    extra_kwargs = {"url": {"lookup_field": "code"}}
 
     class Meta:
         model = models.Beer
