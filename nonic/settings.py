@@ -26,7 +26,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "123321a")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", False)
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -82,11 +82,11 @@ WSGI_APPLICATION = "nonic.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.{}".format(os.getenv("DATABASE_ENGINE", "postgresql_psycopg2")),
-        "NAME": os.getenv("DATABASE_NAME", "nonic"),
-        "USER": os.getenv("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD", "password"),
-        "HOST": os.getenv("DATABASE_HOST", "127.0.0.1"),
-        "PORT": os.getenv("DATABASE_PORT", 5432),
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "docker",
+        "HOST": "localhost",
+        "PORT": 5432,
     }
 }
 
@@ -141,6 +141,9 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 
 # Internationalization
