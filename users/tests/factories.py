@@ -10,3 +10,6 @@ class UserFactory(DjangoModelFactory):
     class Meta:
         model = models.User
         django_get_or_create = ("email", "username")
+
+    email = faker.email
+    username = faker.first_name
