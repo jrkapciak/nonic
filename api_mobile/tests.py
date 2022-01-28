@@ -52,3 +52,11 @@ class BeerViewSetTestCase(APITestCase):
         url = f'{reverse("api-mobile:beers-list")}?country={most_popular_country}'
         response = self.client.get(url)
         self.assertEqual(response.data.get("count"), beer_list_countries.count(most_popular_country))
+
+    def test_add_new_beer_unauthorised(self):
+        response = self.client.post(reverse("api-mobile:beers-list"))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_delete_beer_unauthorised(self):
+        response = self.client.delete(reverse("api-mobile:beers-detail", kwargs={"code": self.beer_list[0].code}))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
