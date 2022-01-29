@@ -72,4 +72,4 @@ class BeerViewSetTestCase(APITestCase):
         }
         response = self.client.post(reverse("api-mobile:beers-list"), data=beer_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get("code"), beer_data["code"])
+        self.assertEqual(response.data.get("code"), str(beer_data["code"]))
