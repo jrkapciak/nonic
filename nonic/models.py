@@ -37,7 +37,11 @@ class Beer(TimestampedModel):
     code = models.CharField(_("Code"), max_length=255, blank=False, unique=True)
     description = models.TextField(_("Description"), blank=False)
     manufactured_by = models.ForeignKey(
-        "nonic.Manufacturer", verbose_name=_("Manufacturer"), related_name="beers", on_delete=models.CASCADE
+        "nonic.Manufacturer",
+        verbose_name=_("Manufacturer"),
+        related_name="beers",
+        on_delete=models.CASCADE,
+        null=True,
     )
     style = models.ManyToManyField("nonic.Style", verbose_name=_("Style"), related_name="beers", blank=True)
     volume = models.PositiveSmallIntegerField(_("Volume (ml)"), blank=True, default=500)
@@ -45,7 +49,7 @@ class Beer(TimestampedModel):
     extract = models.FloatField(_("Extract"), blank=True, null=True)
     tags = models.JSONField(_("Tags"), blank=True, default=dict)
     thumbnail = models.ImageField(_("thumbnail"), storage=PublicMediaStorage(), blank=True, null=True)
-    country = models.CharField(_("Country"), max_length=255, blank=False)
+    country = models.CharField(_("Country"), max_length=255, blank=True)
     rating = models.PositiveSmallIntegerField(
         _("Rating"), blank=True, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)]
     )

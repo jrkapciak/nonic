@@ -15,7 +15,7 @@ class BeerViewSet(viewsets.ModelViewSet):
     lookup_field = "code"
 
 
-class StyleViewSet(viewsets.ModelViewSet):
+class StyleViewSet(viewsets.ReadOnlyModelViewSet):
     paginate_by = 10
     queryset = nonic_models.Style.objects.all()
     serializer_class = serializers.StylesSerializer

@@ -2,8 +2,9 @@ from django.urls import reverse
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
-
+from users.tests.factories import UserFactory
 from nonic.tests.factories import BeerFactory, BeerStyleFactory
+from nonic.models import Beer
 
 faker = Faker()
 
@@ -13,6 +14,7 @@ class BeerViewSetTestCase(APITestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.client = APIClient()
+        cls.user = UserFactory()
 
     @classmethod
     def setUpTestData(cls):
@@ -60,3 +62,14 @@ class BeerViewSetTestCase(APITestCase):
     def test_delete_beer_unauthorised(self):
         response = self.client.delete(reverse("api-mobile:beers-detail", kwargs={"code": self.beer_list[0].code}))
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_add_new_beer(self):
+        self.client.force_authenticate(self.user)
+        beer_data = {
+            "code": faker.pyint(),
+            "name": faker.company(),
+            "description": faker.paragraph(variable_nb_sentences=False),
+        }
+        response = self.client.post(reverse("api-mobile:beers-list"), data=beer_data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data.get("code"), beer_data["code"])
