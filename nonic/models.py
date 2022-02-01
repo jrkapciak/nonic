@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.db.models import Avg
 from nonic.storages import PublicMediaStorage
+
+User = get_user_model()
 
 
 class TimestampedModel(models.Model):
@@ -50,13 +53,48 @@ class Beer(TimestampedModel):
     tags = models.JSONField(_("Tags"), blank=True, default=dict)
     thumbnail = models.ImageField(_("thumbnail"), storage=PublicMediaStorage(), blank=True, null=True)
     country = models.CharField(_("Country"), max_length=255, blank=True)
-    rating = models.PositiveSmallIntegerField(
-        _("Rating"), blank=True, default=1, validators=[MaxValueValidator(10), MinValueValidator(1)]
+    rating = models.DecimalField(
+        _("Rating"),
+        blank=True,
+        default=1,
+        max_digits=3,
+        decimal_places=2,
+        validators=[MaxValueValidator(5), MinValueValidator(1)],
     )
     rating_count = models.IntegerField(_("Rating count"), blank=True, default=0)
+    favorites = models.ManyToManyField(User, through="UserFavorite", related_name="favorite_beer")
+    users_rating = models.ManyToManyField(User, through="BeerRating", related_name="beer_rating")
 
     class Meta:
         ordering = ["-name"]
 
     def __str__(self):
         return self.name
+
+
+class BeerRating(TimestampedModel):
+    beer = models.ForeignKey(Beer, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    rating = models.PositiveSmallIntegerField(
+        _("Rating"), blank=True, default=1, validators=[MaxValueValidator(5), MinValueValidator(1)]
+    )
+
+    def __str__(self):
+        return f"{self.user}: {self.beer} - {self.rating}"
+
+    @staticmethod
+    def calculate_rating(beer):
+        return BeerRating.objects.filter(beer=beer).aggregate(rating=Avg("rating")).get("rating")
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        beer_rating = super().save(
+            force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
+        )
+        self.beer.rating = self.calculate_rating(self.beer)
+        self.beer.save(update_fields=["rating"])
+        return beer_rating
+
+
+class UserFavorite(TimestampedModel):
+    beer = models.ForeignKey(Beer, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)

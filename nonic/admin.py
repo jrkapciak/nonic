@@ -17,4 +17,5 @@ class ManufacturerAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Beer, BeerAdmin)
 admin.site.register(models.Manufacturer, ManufacturerAdmin)
-admin.site.register(models.Style)
+admin.site.register(models.BeerRating)
+admin.site.register(models.UserFavorite)
