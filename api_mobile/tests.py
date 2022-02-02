@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 from users.tests.factories import UserFactory
 from nonic.tests.factories import BeerFactory, BeerStyleFactory
+from decimal import Decimal
 
 faker = Faker()
 
@@ -72,3 +73,14 @@ class BeerViewSetTestCase(APITestCase):
         response = self.client.post(reverse("api-mobile:beers-list"), data=beer_data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data.get("code"), str(beer_data["code"]))
+
+    def test_rate_beer(self):
+        self.client.force_authenticate(self.user)
+        data = {
+            "rating": faker.pyint(min_value=1, max_value=5),
+        }
+        response = self.client.post(
+            reverse("api-mobile:beers-rate", kwargs={"code": self.beer_list[0].code}), data=data
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data.get("rating"), f'{data.get("rating"):.2f}')
