@@ -41,3 +41,11 @@ class StylesSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Style
         fields = ("name",)
+
+
+class BeerRatingSerializer(serializers.ModelSerializer):
+    rating = serializers.IntegerField()
+
+    class Meta:
+        model = models.BeerRating
+        fields = ("id", "rating")

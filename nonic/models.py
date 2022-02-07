@@ -62,8 +62,8 @@ class Beer(TimestampedModel):
         validators=[MaxValueValidator(5), MinValueValidator(1)],
     )
     rating_count = models.IntegerField(_("Rating count"), blank=True, default=0)
-    favorites = models.ManyToManyField(User, through="UserFavorite", related_name="favorite_beer")
-    users_rating = models.ManyToManyField(User, through="BeerRating", related_name="beer_rating")
+    favorites = models.ManyToManyField(User, through="UserFavorite", related_name="favorite_beer", blank=True)
+    users_rating = models.ManyToManyField(User, through="BeerRating", related_name="beer_rating", blank=True)
 
     class Meta:
         ordering = ["-name"]
@@ -86,12 +86,17 @@ class BeerRating(TimestampedModel):
     def calculate_rating(beer):
         return BeerRating.objects.filter(beer=beer).aggregate(rating=Avg("rating")).get("rating")
 
+    @staticmethod
+    def calculate_rating_count(beer):
+        return BeerRating.objects.filter(beer=beer).count()
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         beer_rating = super().save(
             force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
         )
         self.beer.rating = self.calculate_rating(self.beer)
-        self.beer.save(update_fields=["rating"])
+        self.beer.rating_count = self.calculate_rating_count(self.beer)
+        self.beer.save(update_fields=["rating", "rating_count"])
         return beer_rating
 
 
