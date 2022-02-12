@@ -24,17 +24,22 @@ class BeerSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "code",
-            "description",
             "manufactured_by",
-            "volume",
-            "extract",
             "alcohol",
             "style",
             "thumbnail",
             "country",
             "rating",
             "rating_count",
+            "favorite_count",
         )
+
+
+class BeerDetailSerializer(BeerSerializer):
+
+    class Meta:
+        model = models.Beer
+        fields = BeerSerializer.Meta.fields + ("description",)
 
 
 class StylesSerializer(serializers.ModelSerializer):

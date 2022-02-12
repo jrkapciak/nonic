@@ -62,6 +62,7 @@ class Beer(TimestampedModel):
         validators=[MaxValueValidator(5), MinValueValidator(1)],
     )
     rating_count = models.IntegerField(_("Rating count"), blank=True, default=0)
+    favorites_count = models.IntegerField(_("Favorite count"), blank=True, default=0)
     favorites = models.ManyToManyField(User, through="UserFavorite", related_name="favorite_beer", blank=True)
     users_rating = models.ManyToManyField(User, through="BeerRating", related_name="beer_rating", blank=True)
 
@@ -103,3 +104,21 @@ class BeerRating(TimestampedModel):
 class UserFavorite(TimestampedModel):
     beer = models.ForeignKey(Beer, null=True, on_delete=models.SET_NULL)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    @staticmethod
+    def calculate_favorite_count(beer):
+        return UserFavorite.objects.filter(beer=beer).count()
+
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using=using, keep_parents=keep_parents)
+        self.beer.favorites_count = self.calculate_favorite_count(self.beer)
+        self.beer.save(update_fields=["favorites_count"])
+        return
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        favorite = super().save(
+            force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields
+        )
+        self.beer.favorites_count = self.calculate_favorite_count(self.beer)
+        self.beer.save(update_fields=["favorites_count"])
+        return favorite

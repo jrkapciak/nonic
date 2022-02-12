@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from nonic.models import BeerRating, UserFavorite
 from . import serializers
 from .filters import BeerFilter
-from .serializers import BeerRatingSerializer
+from .serializers import BeerRatingSerializer, BeerDetailSerializer
 
 
 class BeerViewSet(viewsets.ModelViewSet):
@@ -18,6 +18,14 @@ class BeerViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.BeerSerializer
     filter_class = BeerFilter
     lookup_field = "code"
+    default_serializer_class = serializers.BeerSerializer
+    serializers = {
+        "list": serializers.BeerSerializer,
+        "detail": serializers.BeerDetailSerializer,
+    }
+
+    def get_serializer_class(self):
+        return self.serializers.get(self.action, self.default_serializer_class)
 
     @action(detail=True, methods=["post", "delete"])
     def favorite(self, request, code):
@@ -29,7 +37,7 @@ class BeerViewSet(viewsets.ModelViewSet):
             response_status = status.HTTP_201_CREATED
 
         elif request.method == "DELETE":
-            user_favorite = get_object_or_404(UserFavorite, {"beer": beer, "user": request.user})
+            user_favorite = get_object_or_404(UserFavorite, **{"beer": beer, "user": request.user})
             user_favorite.delete()
             response_status = status.HTTP_204_NO_CONTENT
 
