@@ -36,7 +36,6 @@ class BeerSerializer(serializers.ModelSerializer):
 
 
 class BeerDetailSerializer(BeerSerializer):
-
     class Meta:
         model = models.Beer
         fields = BeerSerializer.Meta.fields + ("description",)
