@@ -31,7 +31,7 @@ class BeerSerializer(serializers.ModelSerializer):
             "country",
             "rating",
             "rating_count",
-            "favorite_count",
+            "favorites_count",
         )
 
 

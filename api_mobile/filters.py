@@ -21,6 +21,6 @@ class BeerFilter(django_filters.FilterSet):
             "alcohol",
             "style",
             "country",
-            "favorite_count",
+            "favorites_count",
             "rating_count",
         )
