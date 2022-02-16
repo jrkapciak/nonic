@@ -12,6 +12,8 @@ class ManufactureSerializer(serializers.ModelSerializer):
 class BeerSerializer(serializers.ModelSerializer):
     style = serializers.StringRelatedField(read_only=True, many=True)
     rating = serializers.DecimalField(
+        max_digits=3,
+        decimal_places=2,
         coerce_to_string=False
     )
     manufactured_by = ManufactureSerializer(
