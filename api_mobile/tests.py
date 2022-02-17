@@ -83,7 +83,7 @@ class BeerViewSetTestCase(APITestCase):
             reverse("api-mobile:beers-rate", kwargs={"code": self.beer_list[0].code}), data=data
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data.get("rating"),  Decimal(data.get("rating")))
+        self.assertEqual(response.data.get("rating"), Decimal(data.get("rating")))
 
     def test_change_rate_beer(self):
         self.client.force_authenticate(self.user)
