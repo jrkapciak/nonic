@@ -1,6 +1,7 @@
 from datetime import timedelta
 from unittest.mock import patch
 
+from django.db import IntegrityError
 from django.utils import timezone
 from faker import Faker
 

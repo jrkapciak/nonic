@@ -1,6 +1,9 @@
 import datetime
+import boto3
+import os
 
 from django.utils import timezone
+from django.utils.translation import gettext as _
 
 from faker import Faker
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -39,6 +42,17 @@ def validate_otp(user: User, otp: int) -> bool:
 
 
 def send_otp(user: User) -> bool:
+    if not os.environ.get("OTP_ENABLED"):
+        return False
+
+    otp_text = _(f"This is your One Time Password {user.otp}")
+    client = boto3.client(
+        "sns",
+        aws_access_key_id=os.environ.get("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.environ.get("AWS_ACCESS_KEY_ID"),
+        region_name=os.environ.get("AWS_SNS_REGION"),
+    )
+    client.publish(PhoneNumber=user.phone, Message=otp_text)
     return True
 
 

@@ -15,6 +15,7 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    phone = models.CharField(_("phone"), max_length=64, blank=False, unique=True)
 
     @property
     def otp_limit_reached(self):

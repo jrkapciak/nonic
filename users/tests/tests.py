@@ -22,8 +22,12 @@ class UsersModelTests(TestCase):
         self.assertFalse(user.is_superuser)
 
     def test_create_more_than_one_user(self):
-        User.objects.create_user(username=faker.name(), email=faker.email(), password=faker.password())
-        User.objects.create_user(username=faker.name(), email=faker.email(), password=faker.password())
+        User.objects.create_user(
+            username=faker.name(), email=faker.email(), password=faker.password(), phone=faker.phone_number()
+        )
+        User.objects.create_user(
+            username=faker.name(), email=faker.email(), password=faker.password(), phone=faker.phone_number()
+        )
         self.assertEqual(User.objects.count(), 2)
 
     def test_create_user_with_unique_email(self):
@@ -35,6 +39,20 @@ class UsersModelTests(TestCase):
         # second user
         with self.assertRaises(IntegrityError):
             User.objects.create_user(username=faker.name(), email=email, password=faker.password())
+
+    def test_create_user_with_unique_phone(self):
+        phone = faker.phone_number()
+        # first user
+        user = User.objects.create_user(
+            username=faker.name(), email=faker.email(), phone=phone, password=faker.password()
+        )
+        self.assertEqual(phone, user.phone)
+
+        # second user
+        with self.assertRaises(IntegrityError):
+            User.objects.create_user(
+                username=faker.name(), email=faker.email(), phone=phone, password=faker.password()
+            )
 
 
 class TestRegisterView(APITestCase):

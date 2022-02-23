@@ -32,4 +32,9 @@ class Migration(migrations.Migration):
                 verbose_name="invalid otp entered",
             ),
         ),
+        migrations.AddField(
+            model_name='user',
+            name='phone',
+            field=models.CharField(blank=False, max_length=64, unique=True, verbose_name='phone'),
+        ),
     ]
