@@ -73,6 +73,12 @@ class Beer(TimestampedModel):
         return self.name
 
 
+class BeerTemplate(Beer):
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    draft_created = models.DateTimeField(auto_now_add=True)
+    draft_updated = models.DateTimeField(auto_now=True)
+
+
 class BeerRating(TimestampedModel):
     beer = models.ForeignKey(Beer, on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

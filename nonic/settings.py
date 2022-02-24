@@ -12,6 +12,8 @@ from pathlib import Path
 from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.utils.translation import gettext
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -30,6 +32,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
+    "modeltranslation",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -153,7 +156,13 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
+MODELTRANSLATION_DEFAULT_LANGUAGE = "en"
 
+gettext = lambda s: s
+LANGUAGES = (
+    ("pl", gettext("Polish")),
+    ("en", gettext("English")),
+)
 TIME_ZONE = "UTC"
 
 USE_I18N = True
