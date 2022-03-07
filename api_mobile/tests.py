@@ -1,10 +1,12 @@
+from decimal import Decimal
+
 from django.urls import reverse
 from faker import Faker
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
-from users.tests.factories import UserFactory
+
 from nonic.tests.factories import BeerFactory, BeerStyleFactory
-from decimal import Decimal
+from users.tests.factories import UserFactory
 
 faker = Faker()
 

@@ -1,13 +1,12 @@
 import datetime
-import boto3
 import os
 
+import boto3
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import gettext as _
-
 from faker import Faker
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 faker = Faker()

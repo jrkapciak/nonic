@@ -1,7 +1,7 @@
-from rest_framework.generics import CreateAPIView
 from django.contrib.auth import get_user_model
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.generics import CreateAPIView
+from rest_framework.response import Response
 
 from .serializers import UserSerializer
 from .utils import get_tokens_for_user

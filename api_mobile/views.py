@@ -1,14 +1,15 @@
-from rest_framework import viewsets, status
+from rest_framework import status, viewsets
+from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from nonic import models as nonic_models
-from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from nonic import models as nonic_models
 from nonic.models import BeerRating, UserFavorite
+
 from . import serializers
 from .filters import BeerFilter
-from .serializers import BeerRatingSerializer, BeerDetailSerializer
+from .serializers import BeerDetailSerializer, BeerRatingSerializer
 
 
 class BeerViewSet(viewsets.ModelViewSet):
