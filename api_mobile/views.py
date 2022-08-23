@@ -8,7 +8,7 @@ from nonic import models as nonic_models
 from nonic.models import BeerRating, UserFavorite
 
 from . import serializers
-from .filters import BeerFilter
+from api_mobile.filters.beers import BeerFilter
 from .serializers import BeerDetailSerializer, BeerRatingSerializer
 
 
