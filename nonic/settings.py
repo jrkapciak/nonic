@@ -8,8 +8,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import logging.config
 import os
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.utils.translation import gettext
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'drf_yasg',
+    "drf_yasg",
     "django_filters",
     "django_cleanup.apps.CleanupConfig",
     "rest_framework",

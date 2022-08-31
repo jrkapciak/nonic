@@ -4,11 +4,14 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
+from api_mobile.filters.beers import BeerFilter
+from api_mobile.serializers.beers import (
+    BeerDetailSerializer,
+    BeerRatingSerializer,
+    BeerSerializer,
+)
 from nonic import models as nonic_models
 from nonic.models import BeerRating, UserFavorite
-
-from api_mobile.serializers.beers import BeerSerializer, BeerDetailSerializer, BeerRatingSerializer
-from api_mobile.filters.beers import BeerFilter
 
 
 class BeerViewSet(viewsets.ModelViewSet):

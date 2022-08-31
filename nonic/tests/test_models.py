@@ -1,9 +1,9 @@
 from django.test import TestCase
-
-from users.tests.factories import UserFactory
-from nonic.tests.factories import BeerFactory
 from faker import Faker
+
 from nonic.models import BeerRating
+from nonic.tests.factories import BeerFactory
+from users.tests.factories import UserFactory
 
 faker = Faker()
 

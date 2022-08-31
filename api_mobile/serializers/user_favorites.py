@@ -1,6 +1,8 @@
 from rest_framework import serializers
-from nonic.models import UserFavorite
+
 from api_mobile.serializers.beers import BeerSerializer
+from nonic.models import UserFavorite
+
 
 class UserFavoriteBeerSerializer(serializers.ModelSerializer):
     beer = BeerSerializer()

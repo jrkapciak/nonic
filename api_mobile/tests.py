@@ -5,10 +5,10 @@ from faker import Faker
 from rest_framework import status
 from rest_framework.test import APIClient, APITestCase
 
+from api_mobile.serializers.user_favorites import UserFavoriteBeerSerializer
 from nonic.models import UserFavorite
 from nonic.tests.factories import BeerFactory, BeerStyleFactory
 from users.tests.factories import UserFactory
-from api_mobile.serializers.user_favorites import UserFavoriteBeerSerializer
 
 faker = Faker()
 
@@ -145,5 +145,6 @@ class UserFavoritesBeersViewSetTestCase(APITestCase):
         self.client.force_authenticate(self.user)
         favorite_beer = UserFavorite.objects.create(beer=self.beer_list[0], user=self.user)
         response = self.client.get(reverse("api-mobile:user_favorites-list"))
-        self.assertEqual(UserFavoriteBeerSerializer(favorite_beer).data.get("beer"),
-                         response.data.get("results")[0].get("beer"))
+        self.assertEqual(
+            UserFavoriteBeerSerializer(favorite_beer).data.get("beer"), response.data.get("results")[0].get("beer")
+        )

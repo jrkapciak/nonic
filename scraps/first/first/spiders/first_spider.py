@@ -11,6 +11,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "nonic.settings"
 django.setup()
 
 from nonic.models import Beer, BeerSource, Manufacturer, Style
+
 from ..settings import start_url_first
 
 

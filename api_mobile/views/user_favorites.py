@@ -1,8 +1,7 @@
 from rest_framework import viewsets
 
-from nonic import models as nonic_models
-
 from api_mobile.serializers.user_favorites import UserFavoriteBeerSerializer
+from nonic import models as nonic_models
 
 
 class UserFavoritesBeersViewSet(viewsets.ModelViewSet):

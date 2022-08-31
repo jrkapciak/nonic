@@ -10,12 +10,8 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "nonic.settings"
 django.setup()
 
 from nonic.models import Beer, BeerSource, Manufacturer, Style
-from ..settings  import (
-    manufacture_url,
-    s1_phrase,
-    second_base_url,
-    start_urls_second,
-)
+
+from ..settings import manufacture_url, s1_phrase, second_base_url, start_urls_second
 
 
 class SecondSpider(scrapy.Spider):

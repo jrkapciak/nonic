@@ -1,8 +1,7 @@
 from rest_framework import viewsets
 
-from nonic import models as nonic_models
-
 from api_mobile.serializers.styles import StylesSerializer
+from nonic import models as nonic_models
 
 
 class StyleViewSet(viewsets.ModelViewSet):

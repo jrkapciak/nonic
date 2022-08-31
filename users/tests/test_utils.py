@@ -1,12 +1,12 @@
 from datetime import timedelta
 from unittest.mock import patch
 
+from django.test import TestCase
 from django.utils import timezone
 from faker import Faker
 
 from users.tests.factories import UserFactory
 from users.utils import generate_otp, validate_otp
-from django.test import TestCase
 
 faker = Faker()
 

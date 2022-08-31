@@ -3,8 +3,8 @@ from django.db.utils import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
-from rest_framework.test import APIClient, APITestCase
 from rest_framework import status
+from rest_framework.test import APIClient, APITestCase
 
 from users.tests.factories import UserFactory
 

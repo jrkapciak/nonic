@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from nonic import models
+
 from .manufacture import ManufactureSerializer
 
 
