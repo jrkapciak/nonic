@@ -1,3 +1,5 @@
+import os
+
 BOT_NAME = "second"
 SPIDER_MODULES = ["second.spiders"]
 NEWSPIDER_MODULE = "second.spiders"
@@ -13,3 +15,7 @@ CONCURRENT_REQUESTS_PER_IP = 1
 RETRY_ENABLED = True
 RETRY_TIMES = 3
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
+manufacture_url = os.getenv("MANUFACTURE_URL")
+s1_phrase = os.getenv("S1_PHRASE")
+second_base_url = os.getenv("SECOND_BASE_URL")
+start_urls_second = os.getenv("START_URL_SECOND")

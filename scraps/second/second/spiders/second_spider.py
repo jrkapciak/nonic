@@ -1,5 +1,4 @@
 import os
-import re
 import sys
 
 import django
@@ -11,7 +10,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "nonic.settings"
 django.setup()
 
 from nonic.models import Beer, BeerSource, Manufacturer, Style
-from scraps.settings import (
+from ..settings  import (
     manufacture_url,
     s1_phrase,
     second_base_url,

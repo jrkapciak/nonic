@@ -11,7 +11,7 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "nonic.settings"
 django.setup()
 
 from nonic.models import Beer, BeerSource, Manufacturer, Style
-from scraps.settings import start_urls_first
+from ..settings import start_url_first
 
 
 class FirstSpider(scrapy.Spider):
@@ -19,7 +19,7 @@ class FirstSpider(scrapy.Spider):
 
     def __init__(self, name=None, **kwargs):
         super().__init__(name=None, **kwargs)
-        self.start_urls = start_urls_first
+        self.start_urls = start_url_first
 
     def start_requests(self):
         for url in self.start_urls:

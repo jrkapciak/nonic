@@ -5,6 +5,7 @@ from django.urls import re_path
 
 from api_mobile.views.beers import BeerViewSet
 from api_mobile.views.styles import StyleViewSet
+from api_mobile.views.user_favorites import UserFavoritesBeersViewSet
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -16,8 +17,10 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r"beers", BeerViewSet, basename="beers"),
-router.register(r"styles", StyleViewSet, basename="styles"),
+router.register("beers", BeerViewSet, basename="beers")
+router.register("styles", StyleViewSet, basename="styles")
+router.register("user/favorites", UserFavoritesBeersViewSet, basename="user_favorites")
+
 urlpatterns = router.urls
 
 urlpatterns += [
