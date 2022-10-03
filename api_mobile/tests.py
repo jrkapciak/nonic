@@ -3,6 +3,7 @@ from decimal import Decimal
 from django.urls import reverse
 from faker import Faker
 from rest_framework import status
+from rest_framework.renderers import JSONRenderer
 from rest_framework.test import APIClient, APITestCase
 
 from api_mobile.serializers.user_favorites import UserFavoriteBeerSerializer
@@ -141,10 +142,23 @@ class UserFavoritesBeersViewSetTestCase(APITestCase):
             )
         return beer_list
 
+    def test_user_is_authenticated(self):
+        response = self.client.get(reverse("api-mobile:user_favorites-list"))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def test_get_user_favorites_beers(self):
         self.client.force_authenticate(self.user)
         favorite_beer = UserFavorite.objects.create(beer=self.beer_list[0], user=self.user)
         response = self.client.get(reverse("api-mobile:user_favorites-list"))
         self.assertEqual(
             UserFavoriteBeerSerializer(favorite_beer).data.get("beer"), response.data.get("results")[0].get("beer")
+        )
+
+    def test_get_only_own_favorites_beers(self):
+        self.client.force_authenticate(self.user)
+        UserFavorite.objects.create(beer=self.beer_list[0], user=self.user)
+        other_user_favorite_beer = UserFavorite.objects.create(beer=self.beer_list[1], user=UserFactory())
+        response = self.client.get(reverse("api-mobile:user_favorites-list"))
+        self.assertNotIn(
+            JSONRenderer().render(UserFavoriteBeerSerializer(other_user_favorite_beer).data), response.content
         )
