@@ -18,4 +18,5 @@ RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
 manufacture_url = os.getenv("MANUFACTURE_URL")
 s1_phrase = os.getenv("S1_PHRASE")
 second_base_url = os.getenv("SECOND_BASE_URL")
-start_urls_second = os.getenv("START_URL_SECOND")
+start_urls_second = os.getenv("START_URL_SECOND").split(",")
+LOG_LEVEL = 'ERROR'

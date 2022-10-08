@@ -15,4 +15,4 @@ CONCURRENT_REQUESTS_PER_IP = 1
 RETRY_ENABLED = True
 RETRY_TIMES = 3
 RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
-start_url_first = os.getenv("START_URL_FIRST")
+start_url_first = os.getenv("START_URL_FIRST").split(",")

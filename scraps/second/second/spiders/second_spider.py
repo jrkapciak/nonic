@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 import django
@@ -24,9 +25,7 @@ class SecondSpider(scrapy.Spider):
 
     def start_requests(self):
         yield scrapy.Request(url=manufacture_url, callback=self.parse_manufacturers)
-        # for url in self.start_urls:
-        #     yield scrapy.Request(url=url, callback=self.parse)
-        # print(self.manufacturers_map)
+
 
     def parse(self, response):
         for nav_item in response.css(".button.navItem"):
@@ -98,17 +97,23 @@ class SecondSpider(scrapy.Spider):
                 style, _ = Style.objects.get_or_create(name__iexact=style_name, defaults={"name": style_name})
                 styles.append(style.id)
         except:
-            pass
+            styles = None
         if raw_alcohol := response.css(".tag::text")[0].extract():
+            if not raw_alcohol.replace(" ", ""):
+                pass
             try:
-                result["alcohol"] = float(raw_alcohol.extract().replace("\xa0", "").split()[-1])
-            except (ValueError, IndexError):
-                print(raw_alcohol.extract())
+                result["alcohol"] = re.findall(r"[-+]?\d*\.?\d+|\d+", raw_alcohol)[0]
+            except IndexError:
+                pass
+
         if extract_raw := response.css(".tag::text")[1].extract():
-            try:
-                result["extract"] = float(extract_raw.extract().replace("\xa0", ""))
-            except (ValueError, IndexError):
-                print(extract_raw.extract())
+            if not extract_raw.replace(" ", ""):
+                pass
+            else:
+                try:
+                    result["extract"] = re.findall(r"[-+]?\d*\.?\d+|\d+", raw_alcohol)[0]
+                except IndexError:
+                    pass
 
         result["country"] = response.css(".tag a::text")[1].extract()
         result["description"] = " ".join(response.xpath('//*[@id="intertext1"]/div[4]')[0].css("::text").extract())
