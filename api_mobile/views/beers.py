@@ -1,5 +1,7 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
@@ -15,6 +17,7 @@ from nonic.models import BeerRating, UserFavorite
 
 
 class BeerViewSet(viewsets.ModelViewSet):
+    filter_backends = [OrderingFilter, DjangoFilterBackend]
     permission_classes = (IsAuthenticatedOrReadOnly,)
     paginate_by = 10
     queryset = nonic_models.Beer.objects.all()
@@ -26,6 +29,7 @@ class BeerViewSet(viewsets.ModelViewSet):
         "list": BeerSerializer,
         "detail": BeerDetailSerializer,
     }
+    ordering_fields = ["rating", "rating_count"]
 
     def get_serializer_class(self):
         return self.serializers.get(self.action, self.default_serializer_class)
