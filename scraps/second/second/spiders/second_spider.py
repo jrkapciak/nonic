@@ -26,7 +26,6 @@ class SecondSpider(scrapy.Spider):
     def start_requests(self):
         yield scrapy.Request(url=manufacture_url, callback=self.parse_manufacturers)
 
-
     def parse(self, response):
         for nav_item in response.css(".button.navItem"):
             if s1_phrase in nav_item.extract():
