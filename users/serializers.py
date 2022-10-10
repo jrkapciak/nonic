@@ -8,13 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
 
-    def create(self, validated_data: dict) -> UserModel:
-
-        user = UserModel.objects.create_user(
-            username=validated_data["username"], password=validated_data["password"], email=validated_data["password"]
-        )
-        return user
-
     class Meta:
         model = UserModel
-        fields = ("id", "username", "password", "email")
+        fields = ("id", "username", "password", "email", "phone")

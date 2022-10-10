@@ -58,17 +58,42 @@ class UsersModelTests(TestCase):
 class TestRegisterView(APITestCase):
     def test_register_response_contains_tokens(self):
         client = APIClient()
-        data = {"password": faker.password(), "username": faker.first_name(), "phone": faker.phone_number()}
+        data = {
+            "password": faker.password(),
+            "username": faker.first_name(),
+            "phone": faker.phone_number(),
+            "email": faker.email(),
+        }
         response = client.post(reverse("users:register"), data=data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn("access", response.data)
         self.assertIn("refresh", response.data)
 
+    def test_user_was_created(self):
+        client = APIClient()
+        data = {
+            "password": faker.password(),
+            "username": faker.first_name(),
+            "phone": faker.phone_number(),
+            "email": faker.email(),
+        }
+        response = client.post(reverse("users:register"), data=data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(
+            User.objects.filter(username=data["username"], email=data["email"], phone=data["phone"]).exists()
+        )
+
     def test_register_username_is_taken(self):
         user = UserFactory()
         client = APIClient()
-        data = {"password": faker.password(), "username": user.username, "phone": faker.phone_number()}
+        data = {
+            "password": faker.password(),
+            "username": user.username,
+            "email": faker.email(),
+            "phone": faker.phone_number(),
+        }
         response = client.post(reverse("users:register"), data=data)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
