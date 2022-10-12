@@ -11,3 +11,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserModel
         fields = ("id", "username", "password", "email", "phone")
+
+    def create(self, validated_data) -> UserModel:
+        password = validated_data.pop("password", None)
+        instance = self.Meta.model(**validated_data)
+
+        if password and not instance.password:
+            instance.set_password(password)
+        instance.save()
+        return instance

@@ -101,3 +101,21 @@ class TestRegisterView(APITestCase):
         self.assertNotIn("access", response.data)
         self.assertNotIn("refresh", response.data)
         self.assertEqual(User.objects.count(), 1)
+
+    def test_user_can_log_in(self):
+        client = APIClient()
+        data = {
+            "password": faker.password(),
+            "username": faker.first_name(),
+            "phone": faker.phone_number(),
+            "email": faker.email(),
+        }
+        client.post(reverse("users:register"), data=data)
+        response = client.post(reverse("users:token_obtain_pair"), data=data)
+        self.assertIn("access", response.data)
+        self.assertIn("refresh", response.data)
+        client.credentials(HTTP_AUTHORIZATION="Bearer " + response.data["access"])
+        response = client.get(
+            reverse("api-mobile:user_favorites-list"), headers={"Authorization": "Bearer " + response.data["access"]}
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
